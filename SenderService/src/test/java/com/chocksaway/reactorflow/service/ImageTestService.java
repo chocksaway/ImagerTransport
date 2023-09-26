@@ -4,10 +4,10 @@ import com.chocksaway.reactorflow.entities.Image;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public class ImageService {
+public class ImageTestService {
     private final WebClient webClient;
 
-    public ImageService(String baseUrl) {
+    public ImageTestService(String baseUrl) {
         this.webClient = WebClient.create(baseUrl);
     }
     public Mono<Image> getImageById(Integer employeeId) {
