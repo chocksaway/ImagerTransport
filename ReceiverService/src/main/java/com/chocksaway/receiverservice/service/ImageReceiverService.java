@@ -18,9 +18,7 @@ import reactor.rabbitmq.Receiver;
 import java.util.Objects;
 
 @Service
-public class ImageReceiverService {
-    private static final String QUEUE = "image-queue";
-
+public class ImageReceiverService implements ImageReceiver {
     @Autowired
     private Mono<Connection> connectionMono;
 
@@ -34,7 +32,7 @@ public class ImageReceiverService {
 
 
     @PostConstruct
-    private void init()  {
+    public void init()  {
         consume();
     }
 

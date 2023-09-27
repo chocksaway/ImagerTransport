@@ -15,7 +15,7 @@ import reactor.rabbitmq.QueueSpecification;
 import reactor.rabbitmq.Sender;
 
 @Service
-public class ImageSenderService {
+public class ImageSenderService implements ImageSender {
     final Sender sender;
 
     public ImageSenderService(Sender sender) {
@@ -38,7 +38,6 @@ public class ImageSenderService {
      * @return Image
      */
     public Mono<Image> createImage(Mono<ImageDTO> dto) {
-
         return dto.flatMap(imageDto -> {
             var image = mapperImageDTOToEntity(imageDto);
             var mapper = new ObjectMapper();
