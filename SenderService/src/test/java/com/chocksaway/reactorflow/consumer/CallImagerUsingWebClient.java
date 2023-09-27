@@ -8,7 +8,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,7 +23,7 @@ public class CallImagerUsingWebClient {
 
         Instant start = Instant.now();
 
-        List<Mono<Image>> list = Stream.of(1, 2)
+        var list = Stream.of(1, 2)
                 .map(i -> client.get().uri("/image/{id}", i).retrieve().bodyToMono(Image.class))
                 .collect(Collectors.toList());
 

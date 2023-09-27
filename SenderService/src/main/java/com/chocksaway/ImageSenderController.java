@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class ImageController {
+public class ImageSenderController {
     private static final List<Image> imageList = new ArrayList<>();
 
     static {

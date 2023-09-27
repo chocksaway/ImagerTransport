@@ -11,23 +11,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.rabbitmq.Receiver;
 
 import java.util.Objects;
 
 @Service
-public class ImageService {
+public class ImageReceiverService {
     private static final String QUEUE = "image-queue";
 
     @Autowired
     private Mono<Connection> connectionMono;
 
-    private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImageReceiverService.class);
 
     final Receiver receiver;
 
-    ImageService(Receiver receiver) {
+    ImageReceiverService(Receiver receiver) {
         this.receiver = receiver;
     }
 
@@ -42,10 +43,27 @@ public class ImageService {
         Objects.requireNonNull(connectionMono.block()).close();
     }
 
+    public Flux<Image> consumeFromQueue() {
+        return receiver.consumeAutoAck(QUEUE).mapNotNull(
+                each -> {
+                    String json = SerializationUtils.deserialize(each.getBody());
+                    var mapper = new ObjectMapper();
+                    Image image = null;
+
+                    try {
+                        image = mapper.readValue(json, Image.class);
+                        return image;
+                    } catch (JsonProcessingException jpe) {
+                        logger.warn("JSON processing exception: {}", jpe.toString());
+                    }
+                    return image;
+                });
+    }
+
     public void consume() {
         receiver.consumeAutoAck(QUEUE).subscribe(m -> {
             String json = SerializationUtils.deserialize(m.getBody());
-            ObjectMapper mapper = new ObjectMapper();
+            var mapper = new ObjectMapper();
             Image image;
 
             try {

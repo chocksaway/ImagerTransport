@@ -15,22 +15,21 @@ import reactor.rabbitmq.QueueSpecification;
 import reactor.rabbitmq.Sender;
 
 @Service
-public class ImageService {
-
+public class ImageSenderService {
     final Sender sender;
 
-    public ImageService(Sender sender) {
+    public ImageSenderService(Sender sender) {
         this.sender = sender;
     }
 
-    public ImageService() {
+    public ImageSenderService() {
         this.sender = new Sender();
     }
 
     // Name of our Queue
     private static final String QUEUE = "image-queue";
     // slf4j logger
-    private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImageSenderService.class);
 
 
     /**
@@ -41,17 +40,17 @@ public class ImageService {
     public Mono<Image> createImage(Mono<ImageDTO> dto) {
 
         return dto.flatMap(imageDto -> {
-            Image image = mapperImageDTOToEntity(imageDto);
-            ObjectMapper mapper = new ObjectMapper();
+            var image = mapperImageDTOToEntity(imageDto);
+            var mapper = new ObjectMapper();
             String json;
             try {
                 json = mapper.writeValueAsString(image);
-                byte[] imageSerialized = SerializationUtils.serialize(json);
+                var imageSerialized = SerializationUtils.serialize(json);
                 /*
                  * Simple rabbit queue implementation
                  * Replace with Topic exchange
                  */
-                Flux<OutboundMessage> outbound = Flux.just( new OutboundMessage(
+                var outbound = Flux.just( new OutboundMessage(
                         "",
                         QUEUE, imageSerialized));
 
@@ -76,7 +75,7 @@ public class ImageService {
      * @return - Image
      */
     public Image mapperImageDTOToEntity(ImageDTO dto) {
-        return new Image(dto.item().id(), dto.item().name());
+        return new Image(dto.image().getId(), dto.image().getName());
     }
 
 }
