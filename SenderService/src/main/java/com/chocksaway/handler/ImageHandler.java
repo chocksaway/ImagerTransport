@@ -1,7 +1,7 @@
 package com.chocksaway.handler;
 
+import com.chocksaway.entities.Image;
 import com.chocksaway.reactorflow.dto.ImageDTO;
-import com.chocksaway.reactorflow.entities.Image;
 import com.chocksaway.service.ImageSenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package com.chocksaway.reactorflow.entities;
+package com.chocksaway.entities;
 
 import java.io.Serializable;
 

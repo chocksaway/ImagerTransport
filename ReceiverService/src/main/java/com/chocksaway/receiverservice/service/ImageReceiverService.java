@@ -1,6 +1,6 @@
 package com.chocksaway.receiverservice.service;
 
-import com.chocksaway.receiverservice.entities.Image;
+import com.chocksaway.entities.Image;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Connection;
