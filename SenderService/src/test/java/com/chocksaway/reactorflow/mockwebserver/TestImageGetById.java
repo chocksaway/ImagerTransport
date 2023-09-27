@@ -1,6 +1,6 @@
 package com.chocksaway.reactorflow.mockwebserver;
 
-import com.chocksaway.reactorflow.entities.Image;
+import com.chocksaway.entities.Image;
 import com.chocksaway.reactorflow.service.ImageTestService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.mockwebserver.MockWebServer;

@@ -1,7 +1,7 @@
 package com.chocksaway.service;
 
+import com.chocksaway.entities.Image;
 import com.chocksaway.reactorflow.dto.ImageDTO;
-import com.chocksaway.reactorflow.entities.Image;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.SerializationUtils;

@@ -1,7 +1,7 @@
 package com.chocksaway;
 
+import com.chocksaway.entities.Image;
 import com.chocksaway.handler.ImageHandler;
-import com.chocksaway.reactorflow.entities.Image;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.*;

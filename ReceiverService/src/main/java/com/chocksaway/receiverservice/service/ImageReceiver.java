@@ -1,6 +1,6 @@
 package com.chocksaway.receiverservice.service;
 
-import com.chocksaway.receiverservice.entities.Image;
+import com.chocksaway.entities.Image;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import reactor.core.publisher.Flux;

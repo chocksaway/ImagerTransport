@@ -1,6 +1,6 @@
 package com.chocksaway.receiverservice.controller;
 
-import com.chocksaway.receiverservice.entities.Image;
+import com.chocksaway.entities.Image;
 import com.chocksaway.receiverservice.service.ImageReceiverService;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;

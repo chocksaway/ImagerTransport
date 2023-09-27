@@ -1,6 +1,6 @@
 package com.chocksaway.reactorflow.service;
 
-import com.chocksaway.reactorflow.entities.Image;
+import com.chocksaway.entities.Image;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 

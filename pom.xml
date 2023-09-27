@@ -20,6 +20,7 @@
     <modules>
         <module>ReceiverService</module>
         <module>SenderService</module>
+        <module>Common</module>
     </modules>
     <dependencies>
         <dependency>
