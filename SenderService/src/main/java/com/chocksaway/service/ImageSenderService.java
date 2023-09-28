@@ -57,7 +57,9 @@ public class ImageSenderService implements ImageSender {
                         .thenMany(sender.sendWithPublishConfirms(outbound))
                         .doOnError(e -> logger.error("Send failed", e))
                         .subscribe(m -> {  // blocking - but need debug
+                            // println for debug
                             System.out.println("Message sent");
+                            logger.debug("Message sent");
                         });
             } catch (JsonProcessingException jpe) {
                 logger.warn("JSON processing exception: {}", jpe.toString());

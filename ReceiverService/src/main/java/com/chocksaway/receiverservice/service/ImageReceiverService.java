@@ -1,6 +1,5 @@
 package com.chocksaway.receiverservice.service;
 
-import com.chocksaway.entities.Image;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Connection;
@@ -11,9 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 import reactor.rabbitmq.Receiver;
+import com.chocksaway.entities.Image;
 
 import java.util.Objects;
 
@@ -66,6 +66,7 @@ public class ImageReceiverService implements ImageReceiver {
 
             try {
                 image = mapper.readValue(json, Image.class);
+                // retained for debug
                 System.out.println("----------- RECEIVING -----------------");
                 System.out.println(json);
                 System.out.println(image.getName());
