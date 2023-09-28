@@ -66,6 +66,7 @@ public class ImageReceiverService implements ImageReceiver {
 
             try {
                 image = mapper.readValue(json, Image.class);
+                // retained for debug
                 System.out.println("----------- RECEIVING -----------------");
                 System.out.println(json);
                 System.out.println(image.getName());
