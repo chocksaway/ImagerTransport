@@ -39,6 +39,9 @@ This is currently rather primitive, and needs to be refactored to use a StepVeri
 
 #### Running the Sender and Receiver services
 
+(Please follow the instructions in the *Omission and Bug* section at the base of this document).
+RabbitMQ needs to be installed and the (image-queue) queue needs to be created manually.
+
 ##### Sender Service
 
     SenderService$ mvn spring-boot:run
@@ -72,7 +75,9 @@ The TestReceiverServiceConsumer test checks for (rabbitMQ) messages received by 
 This test sleeps for 30 seconds, then checks what messages have been received.
 
 The example output uses a "{"id":1,"name":"milesd"}" message.  The test checks (assert true) for this message content.
-The test output shows the test being run.  Whilst the 30 second wait is happening, the curl command (please refer to Sending a test message to the Sender Service) sends messages:
+The test output shows the test being run.  
+
+Whilst the 30 second wait is happening, the curl command (please refer to Sending a test message to the Sender Service) sends messages:
 
     $ mvn test
     [INFO] Scanning for projects...
@@ -214,8 +219,32 @@ The test output shows the test being run.  Whilst the 30 second wait is happenin
     [INFO] ------------------------------------------------------------------------
     $
 
+##### Omission and Bug
+
+There is an omission in the README which does not include the installation of RabbitMQ.
+
+The bug is subtle and has only occurred when the producer and consumer are restarted. 
+If the consumer starts before the producer, the (image-queue) queue will not be created.  
+The solution is to create the queue manually.
+
+I have the chosen the simplest way of creating the queue - by using the rabbitmq management console:
+
+Install the rabbitmq with management docker image:
+
+    $ docker run -d -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
     
+Log into the rabbitmq web console:
+
+    Open a web browser to http://localhost:15672/
+    Log in with guest guest.
+    Navigate to Queues and Streams
+    Create a queue named *image-queue*
+      Make sure it is not durable (Durability is Transient).
+      Click the add queue button.
+
+![rabbitmanagement.png](img%2Frabbitmanagement.png)    
     
+
     
 
     
