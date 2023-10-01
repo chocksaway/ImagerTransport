@@ -243,6 +243,65 @@ Log into the rabbitmq web console:
       Click the add queue button.
 
 ![rabbitmanagement.png](img%2Frabbitmanagement.png)    
+
+
+##### Update
+
+After discovering the bug with queue creation (returning an HTTP 201 created).
+
+I have started to refactor the ImageSenderServer::createImage method.  I have created a createQueue method, 
+with a refactored  ImageHandler::createImage
+
+```java
+    /*
+      Create Queue
+     */
+    public Mono<AMQP.Queue.DeclareOk> createQueue(Mono<ImageDTO> dto) {
+        return sender.declareQueue(QueueSpecification.queue(ImageSenderService.QUEUE));
+    }
+```
+
+I've used an onErrorResume method with a Mono.error():
+
+```java
+     /**
+     *
+     * @param request - request from server
+     * @return - server response
+     */
+    public Mono<ServerResponse> createImage(ServerRequest request) {
+        var dto = request.bodyToMono(ImageDTO.class);
+
+        return ServerResponse.ok()
+                .body(service.createQueue(dto)
+                        .onErrorResume(e ->
+                                Mono.error(new ConnectionException(HttpStatus.BAD_REQUEST, "Queue cannot be created", e))), String.class);
+    }
+```
+
+**When** the Post to the SenderService http://localhost:8080 (without RabbitMQ running):
+
+```
+Content-Type: application/json
+
+{"id": 1,"image": {"id" :  1, "name" : "milesd"}}
+```
+
+This produces a ConnectionException: Bad Request Queue cannot be created: 
+
+```
+    com.chocksaway.exception.ConnectionException: Bad Request Queue cannot be created
+    at com.chocksaway.handler.ImageHandler.lambda$createImage$0(ImageHandler.java:33)
+```
+This is the expected behaviour.
+
+_**These** changes have been pushed to the create-queue-with-exception branch._
+
+
+
+
+
+
     
 
     
