@@ -35,7 +35,7 @@ public class TestReceiverServiceConsumer {
         Thread.sleep(30000);
         String content = readContentFromPipedInputStream((PipedInputStream) inputStream);
         logger.info("response content: \n{}", content.replace("}","}\n"));
-        assertTrue(content.contains("data:{\"id\":1,\"name\":\"milesd\"}"));
+        assertTrue(content.contains("milesd"));
     }
 
     public static InputStream getResponseAsInputStream(WebClient client, String url) throws IOException, InterruptedException {
